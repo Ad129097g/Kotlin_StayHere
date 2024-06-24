@@ -9,10 +9,10 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.ccs.stayhere.R
 import com.ccs.stayhere.databinding.ActivityCuartoOfrecidoBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -24,8 +24,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import java.util.*
 
 class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
@@ -56,17 +54,21 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
         }
 
         binding.btnPublicar.setOnClickListener {
-            val nombreAlojamiento = binding.editNombreAlojamiento.text.toString().trim()
             val precio = binding.editPrecio.text.toString().trim()
-            val descripcion = binding.editDescripcion.text.toString().trim()
-            val caracteristicas = binding.editCaracteristicas.text.toString().trim()
+            val compartida = binding.editCompartida.text.toString().trim()
+            val bano = binding.editBano.text.toString().trim()
+            val mascotas = binding.editMascotas.text.toString().trim()
 
-            if (selectedImageUri != null && nombreAlojamiento.isNotEmpty() && precio.isNotEmpty() && descripcion.isNotEmpty() && caracteristicas.isNotEmpty() && selectedLocation != null) {
-                uploadDataToFirebase(nombreAlojamiento, precio, descripcion, caracteristicas)
+            if (selectedImageUri != null && precio.isNotEmpty() && compartida.isNotEmpty() && bano.isNotEmpty() && mascotas.isNotEmpty() && selectedLocation != null) {
+                uploadDataToFirebase(precio, compartida, bano, mascotas)
             } else {
                 Toast.makeText(this, "Por favor, complete todos los campos e inserte una imagen y seleccione una ubicación en el mapa.", Toast.LENGTH_SHORT).show()
             }
             Log.d("CuartoOfrecido", "Botón publicar clicado")
+        }
+
+        binding.btnBuscarUbicacionActual.setOnClickListener {
+            obtenerUbicacionActual()
         }
 
         binding.btnBuscarUbicacion.setOnClickListener {
@@ -76,10 +78,6 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
             } else {
                 Toast.makeText(this, "Por favor, ingrese una ubicación.", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        binding.editCaracteristicas.setOnClickListener {
-            showCaracteristicasDialog()
         }
     }
 
@@ -137,34 +135,47 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun uploadDataToFirebase(nombreAlojamiento: String, precio: String, descripcion: String, caracteristicas: String) {
-        if (selectedImageUri != null && selectedLocation != null) {
+    private fun uploadDataToFirebase(precio: String, compartida: String, bano: String, mascotas: String) {
+        if (selectedImageUri != null) {
             val filename = UUID.randomUUID().toString()
             val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
             storageReference.putFile(selectedImageUri!!)
                 .addOnSuccessListener {
                     storageReference.downloadUrl.addOnSuccessListener { uri ->
-                        saveDataToFirebase(nombreAlojamiento, precio, descripcion, caracteristicas, uri.toString())
+                        saveDataToFirebase(precio, compartida, bano, mascotas, uri.toString())
                     }
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "Error al subir la imagen.", Toast.LENGTH_SHORT).show()
                 }
-        } else {
-            Toast.makeText(this, "Por favor, complete todos los campos e inserte una imagen y seleccione una ubicación en el mapa.", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun saveDataToFirebase(nombreAlojamiento: String, precio: String, descripcion: String, caracteristicas: String, imageUrl: String) {
+    private fun saveDataToFirebase(precio: String, compartida: String, bano: String, mascotas: String, imageUrl: String) {
         val database = FirebaseDatabase.getInstance().getReference("cuartos")
         val cuartoId = database.push().key
-        val cuarto = Cuarto(nombreAlojamiento, precio, descripcion, caracteristicas, imageUrl, selectedLocation)
+        val cuarto = Cuarto(precio, compartida, bano, mascotas, imageUrl, selectedLocation)
 
         if (cuartoId != null) {
             database.child(cuartoId).setValue(cuarto).addOnCompleteListener {
                 Toast.makeText(this, "Cuarto publicado con éxito.", Toast.LENGTH_SHORT).show()
                 finish()
             }
+        }
+    }
+
+    private fun obtenerUbicacionActual() {
+        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    if (location != null) {
+                        val currentLatLng = LatLng(location.latitude, location.longitude)
+                        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+                    } else {
+                        Toast.makeText(this, "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
     }
 
@@ -182,34 +193,11 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun showCaracteristicasDialog() {
-        val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.dialog_caracteristicas, null)
-        builder.setView(dialogView)
-        builder.setTitle("Seleccione las características")
-        builder.setPositiveButton("Aceptar") { dialog, _ ->
-            val chipGroup = dialogView.findViewById<ChipGroup>(R.id.chipGroupCaracteristicas)
-            val selectedCaracteristicas = mutableListOf<String>()
-            for (i in 0 until chipGroup.childCount) {
-                val chip = chipGroup.getChildAt(i) as Chip
-                if (chip.isChecked) {
-                    selectedCaracteristicas.add(chip.text.toString())
-                }
-            }
-            binding.editCaracteristicas.setText(selectedCaracteristicas.joinToString(", "))
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("Cancelar") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.show()
-    }
-
     data class Cuarto(
-        val nombreAlojamiento: String,
         val precio: String,
-        val descripcion: String,
-        val caracteristicas: String,
+        val compartida: String,
+        val bano: String,
+        val mascotas: String,
         val imageUrl: String,
         val location: LatLng?
     )

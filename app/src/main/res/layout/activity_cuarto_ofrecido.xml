@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,83 +17,157 @@
             android:padding="30dp"
             android:gravity="center">
 
-            <EditText
-                android:id="@+id/editUbicacion"
+            <TextView
+                android:id="@+id/txt_cofrecidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Item_COfrecidos"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingrese una ubicación" />
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/edit_ubicacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Escriba la ubicación"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btnBuscarUbicacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Buscar Ubicación"
-                android:layout_marginTop="10dp" />
+                android:text="Buscar"
+                android:layout_marginTop="10dp"/>
 
-            <!-- Mapa de Google -->
-            <fragment
-                android:id="@+id/map"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_marginTop="16dp" />
-
-            <!-- Botón para cambiar imagen -->
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/FABCambiarImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_csesion" />
-
-            <!-- Imagen del cuarto -->
-            <ImageView
-                android:id="@+id/imgCuarto"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="Imagen del cuarto" />
-
-            <!-- Campos de entrada -->
-            <EditText
-                android:id="@+id/editNombreAlojamiento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre del Alojamiento"
-                android:layout_marginTop="16dp" />
-
-            <EditText
-                android:id="@+id/editPrecio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Precio"
-                android:layout_marginTop="10dp" />
-
-            <EditText
-                android:id="@+id/editDescripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Descripción"
-                android:layout_marginTop="10dp" />
-
-            <EditText
-                android:id="@+id/editCaracteristicas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Características"
-                android:focusable="false"
-                android:layout_marginTop="10dp" />
-
-            <!-- Botón para publicar -->
             <Button
-                android:id="@+id/btnPublicar"
+                android:id="@+id/btnBuscarUbicacionActual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Publicar"
+                android:text="Obtener Ubicación Actual"
+                android:layout_marginTop="10dp"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_marginTop="16dp" />
+
+            <Button
+                android:id="@+id/btnSeleccionarUbicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar Ubicación"
+                android:layout_marginTop="10dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
+
+                <EditText
+                    android:id="@+id/edit_precio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_precio"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
+
+                <EditText
+                    android:id="@+id/edit_compartida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_compartida"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
+
+                <EditText
+                    android:id="@+id/edit_bano"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_baño"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
+
+                <EditText
+                    android:id="@+id/edit_mascotas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_mascotas"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/cuartoRL"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="120dp"
+                android:layout_height="120dp">
+
+                <ImageView
+                    android:id="@+id/img_cuarto"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/img" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/FABCambiarImg"
+                    android:layout_alignParentEnd="true"
+                    app:fabSize="mini"
+                    android:src="@drawable/ic_seleccionar_imagen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_publicar"
+                android:text="@string/btn_publicar"
+                android:textAllCaps="true"
+                android:layout_marginTop="15dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
-
 </RelativeLayout>
