@@ -1,0 +1,61 @@
+<resources>
+    <string name="API_KEY">AIzaSyC9joY98jhg1KFICxkFSA9vEp7B68uuu1A</string>
+    <string name="app_name">StayHere</string>
+    <string name="item_Inicio">Inicio</string>
+    <string name="item_Chats">Chats</string>
+    <string name="Item_vender">Vender</string>
+    <string name="Item_Mis_Anuencios">Anuncios</string>
+    <string name="Item_Cuenta">Cuenta</string>
+    <string name="Item_Perfil">Perfil</string>
+    <string name="Item_OH">Ofrecer Habitaciones</string>
+    <string name="Item_BH">Ofrecer Habitaciones</string>
+    <string name="Item_NA">¿Necesitas ayuda?</string>
+    <string name="Item_CS">Cerrar Sesion</string>
+    <string name="Item_Menu">Menu</string>
+    <string name="navigation_drawer_open">Navegation</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="Item_Datos">Datos:</string>
+    <string name="Item_Nombre">Nombre:</string>
+    <string name="Item_Edad">Edad:</string>
+    <string name="Item_Numero">Numero:</string>
+    <string name="tv_nombres">Usuario01</string>
+    <string name="tv_edad">19</string>
+    <string name="tv_numero">912923973</string>
+    <string name="Item_Opiniones">Opiniones:</string>
+    <string name="Item_Opinoin1">Opinon #1</string>
+    <string name="Item_COfrecidos">Cuartos Ofrecidos: </string>
+    <string name="Item_cuarto1">Cuarto 1</string>
+    <string name="item_btn_editar">Editar</string>
+    <string name="item_btn_csesion">Cerrar Sesion</string>
+    <string name="Ingresar_gmail">Gmail</string>
+    <string name="txt_login">Login de usuario</string>
+    <string name="edit_email">Gmail</string>
+    <string name="edit_password">Password</string>
+    <string name="btn_ingresar">Ingresar</string>
+    <string name="txt_nocuenta">¿No tienes una cuenta?</string>
+    <string name="txt_registrar">Registrarme</string>
+
+    <string name="txt_registro">Registro de Usuario</string>
+    <string name="edit_r_password">Repetir contraseña</string>
+    <string name="btn_registrar">Registrar</string>
+
+    <!--Editar perfil-->
+    <string name="txt_editar_p">Editar Perfil</string>
+    <string name="edit_nombres">Nombre completo</string>
+    <string name="edit_f_nac">Fecha de nacimiento</string>
+    <string name="cod_tel"> +00 </string>
+    <string name="edit_telefono">Celular</string>
+    <string name="btn_actualizar">Actualizar</string>
+
+    <string name="btn_nuevo">+ Nuevo</string>
+    <string name="edit_precio">Precio</string>
+    <string name="edit_compartida">Compartida</string>
+    <string name="edit_calificacion">Calificacion</string>
+    <string name="edit_baño">Baño</string>
+    <string name="edit_mascotas">Mascotas</string>
+    <string name="edit_descripcion">Descripcion</string>
+    <string name="btn_publicar">Publicar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

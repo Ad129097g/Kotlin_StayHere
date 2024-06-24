@@ -1,0 +1,217 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".Fragmentos.FragmentPerfil">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="50dp"
+        android:layout_margin="10dp">
+
+        <!-- FrameLayout for Image -->
+        <FrameLayout
+            android:id="@+id/l"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_perfil"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/a"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.FullyRounded" />
+        </FrameLayout>
+
+        <!-- CardView for Datos -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/txt_informacion"
+                    android:text="@string/Item_Datos"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!-- Nombre -->
+                <TextView
+                    android:text="@string/Item_Nombre"
+                    android:layout_below="@id/txt_informacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:id="@+id/txt_nombres"
+                    android:layout_below="@id/txt_informacion"
+                    android:text="@string/tv_nombres"
+                    android:layout_marginTop="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!-- Edad -->
+                <TextView
+                    android:text="@string/Item_Edad"
+                    android:layout_below="@id/txt_nombres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:id="@+id/txt_edad"
+                    android:layout_below="@id/txt_nombres"
+                    android:text="@string/tv_edad"
+                    android:layout_marginTop="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!-- Número -->
+                <TextView
+                    android:text="@string/Item_Numero"
+                    android:layout_below="@id/txt_edad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:id="@+id/txt_numero"
+                    android:layout_below="@id/txt_edad"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/tv_numero"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- CardView for Opiniones -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/txt_opiniones"
+                    android:text="@string/Item_Opiniones"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!-- Opinion 1 -->
+                <TextView
+                    android:id="@+id/txt_opinion"
+                    android:text="La ubicación es muy conveniente, cerca de supermercados y transporte público. El cuarto tiene todo lo necesario y es muy cómodo. Sin duda, recomendaría este lugar."
+                    android:layout_below="@id/txt_opiniones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
+
+                <View
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/stay2"
+                    android:layout_below="@id/txt_opinion"/>
+
+                <!-- Opinion 2 -->
+                <TextView
+                    android:id="@+id/txt_opinion1"
+                    android:text="Me encantó la vista desde el cuarto, es increíble despertarse con el sol entrando por la ventana. La limpieza es excelente y las instalaciones están bien mantenidas."
+                    android:layout_below="@id/txt_opinion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
+
+                <View
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/stay2"
+                    android:layout_below="@id/txt_opinion1"/>
+
+                <!-- Opinion 3 -->
+                <TextView
+                    android:id="@+id/txt_opinion2"
+                    android:text="El cuarto es espacioso y bien iluminado, perfecto para estudiantes que necesitan un ambiente tranquilo para estudiar. Además, el propietario es muy amable y siempre dispuesto a ayudar."
+                    android:layout_below="@id/txt_opinion1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- RelativeLayout for Buttons -->
+        <RelativeLayout
+            android:id="@+id/a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_editar"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/stay"
+                android:text="@string/item_btn_editar"
+                android:textAllCaps="true"
+                app:icon="@drawable/baseline_edit_24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_csesion"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/stay"
+                android:text="@string/item_btn_csesion"
+                android:textAllCaps="true"
+                android:layout_alignParentStart="true"
+                app:icon="@drawable/ic_csesion"
+                android:layout_toStartOf="@id/btn_editar"
+                android:layout_marginEnd="10dp" />
+        </RelativeLayout>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/btnPerfilArrendador"
+            android:text="Perfil Arrendador"
+            android:layout_below="@id/a"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+</ScrollView>

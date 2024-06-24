@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".EditarPerfil">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_editar_p"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_editar_p"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"/>
+        <!--Img de perfil-->
+
+        <RelativeLayout
+            android:id="@+id/perfilRL"
+            android:layout_below="@+id/txt_editar_p"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="120dp"
+            android:layout_height="120dp">
+            
+            <ImageView
+                android:id="@+id/img_perfil"
+                android:layout_width="120dp"
+                android:src="@drawable/a"
+                android:layout_height="120dp"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/FABCambiarImg"
+                android:layout_alignParentEnd="true"
+                app:fabSize="mini"
+                android:src="@drawable/ic_seleccionar_imagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+        </RelativeLayout>
+        <!--Nombres-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TILNombres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/perfilRL"
+            android:layout_marginTop="10dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp">
+
+            <EditText
+                android:id="@+id/edit_nombres"
+                android:inputType="textPersonName"
+                android:hint="@string/edit_nombres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <!--Fecha de nacimiento-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TILF_Nac"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TILNombres"
+            android:layout_marginTop="10dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp">
+
+            <EditText
+                android:id="@+id/edit_f_nac"
+                android:hint="@string/edit_f_nac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/RL_Cod_Tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/TILF_Nac">
+            
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/selectorCod"
+                android:gravity="center"
+                app:ccp_autoDetectCountry="true"
+                app:ccp_rememberLastSelection="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <!--Numero Telefonico-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/SCod"
+                android:layout_toEndOf="@+id/selectorCod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp">
+
+                <EditText
+                    android:id="@+id/edit_telefono"
+                   android:hint="@string/edit_telefono"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_actualizar"
+            android:layout_width="200dp"
+            android:textAllCaps="true"
+            app:icon="@drawable/baseline_edit_24"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/RL_Cod_Tel"
+            android:layout_marginTop="15dp"
+
+            android:layout_height="wrap_content"
+            android:text="@string/btn_actualizar"/>
+
+        
+    </RelativeLayout>
+
+</RelativeLayout>

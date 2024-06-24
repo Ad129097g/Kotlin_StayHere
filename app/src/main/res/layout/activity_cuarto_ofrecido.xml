@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CuartoOfrecido">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/editUbicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese una ubicación" />
+
+            <Button
+                android:id="@+id/btnBuscarUbicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buscar Ubicación"
+                android:layout_marginTop="10dp" />
+
+            <!-- Mapa de Google -->
+            <fragment
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_marginTop="16dp" />
+
+            <!-- Botón para cambiar imagen -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/FABCambiarImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_csesion" />
+
+            <!-- Imagen del cuarto -->
+            <ImageView
+                android:id="@+id/imgCuarto"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="Imagen del cuarto" />
+
+            <!-- Campos de entrada -->
+            <EditText
+                android:id="@+id/editNombreAlojamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre del Alojamiento"
+                android:layout_marginTop="16dp" />
+
+            <EditText
+                android:id="@+id/editPrecio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Precio"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:id="@+id/editDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descripción"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:id="@+id/editCaracteristicas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Características"
+                android:focusable="false"
+                android:layout_marginTop="10dp" />
+
+            <!-- Botón para publicar -->
+            <Button
+                android:id="@+id/btnPublicar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Publicar"
+                android:layout_marginTop="16dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleccione las características"
+        android:textSize="18sp"
+        android:layout_gravity="center"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupCaracteristicas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp" >
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipBanoPropio"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Baño propio" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipMascotas"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mascotas permitidas" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipWiFi"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WiFi disponible" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipAmueblado"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amueblado" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipEstacionamiento"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estacionamiento" />
+
+        <!-- Puedes añadir más Chips según las características que desees ofrecer -->
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <Button
+        android:id="@+id/btn_dialog_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:layout_marginTop="20dp" />
+</LinearLayout>
