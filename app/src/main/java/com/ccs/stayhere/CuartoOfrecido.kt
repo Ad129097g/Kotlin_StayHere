@@ -2,17 +2,17 @@ package com.ccs.stayhere
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.ccs.stayhere.R
+import com.ccs.stayhere.Fragmentos.MapDialogFragment
 import com.ccs.stayhere.databinding.ActivityCuartoOfrecidoBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -22,15 +22,19 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.util.*
 
 class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityCuartoOfrecidoBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private var selectedImageUri: Uri? = null
+    private var selectedImageUris: MutableList<Uri> = mutableListOf()
+    private lateinit var storageReference: StorageReference
     private var mMap: GoogleMap? = null
     private val PERMISSION_CODE = 1001
     private var selectedLocation: LatLng? = null
@@ -41,43 +45,43 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        storageReference = FirebaseStorage.getInstance().reference
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
 
         requestPermissionsIfNeeded()
 
         binding.FABCambiarImg.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent, 1000)
-            Log.d("CuartoOfrecido", "Botón cambiar imagen clicado")
+            if (selectedImageUris.size >= 3) {
+                Toast.makeText(this, "Solo se permiten hasta 3 imágenes.", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(intent, 1000)
+                Log.d("CuartoOfrecido", "Botón cambiar imagen clicado")
+            }
         }
 
         binding.btnPublicar.setOnClickListener {
+            val nombreAlojamiento = binding.editNombreAlojamiento.text.toString().trim()
             val precio = binding.editPrecio.text.toString().trim()
-            val compartida = binding.editCompartida.text.toString().trim()
-            val bano = binding.editBano.text.toString().trim()
-            val mascotas = binding.editMascotas.text.toString().trim()
+            val descripcion = binding.editDescripcion.text.toString().trim()
+            val caracteristicas = binding.editCaracteristicas.text.toString().trim()
 
-            if (selectedImageUri != null && precio.isNotEmpty() && compartida.isNotEmpty() && bano.isNotEmpty() && mascotas.isNotEmpty() && selectedLocation != null) {
-                uploadDataToFirebase(precio, compartida, bano, mascotas)
+            if (selectedImageUris.size >= 3 && nombreAlojamiento.isNotEmpty() && precio.isNotEmpty() && descripcion.isNotEmpty() && caracteristicas.isNotEmpty() && selectedLocation != null) {
+                uploadDataToFirebase(nombreAlojamiento, precio, descripcion, caracteristicas)
             } else {
-                Toast.makeText(this, "Por favor, complete todos los campos e inserte una imagen y seleccione una ubicación en el mapa.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor, complete todos los campos, seleccione al menos 3 imágenes e inserte una ubicación en el mapa.", Toast.LENGTH_SHORT).show()
             }
             Log.d("CuartoOfrecido", "Botón publicar clicado")
         }
 
-        binding.btnBuscarUbicacionActual.setOnClickListener {
-            obtenerUbicacionActual()
+        binding.btnBuscarUbicacion.setOnClickListener {
+            showMapDialog()
         }
 
-        binding.btnBuscarUbicacion.setOnClickListener {
-            val ubicacion = binding.editUbicacion.text.toString().trim()
-            if (ubicacion.isNotEmpty()) {
-                buscarUbicacion(ubicacion)
-            } else {
-                Toast.makeText(this, "Por favor, ingrese una ubicación.", Toast.LENGTH_SHORT).show()
-            }
+        binding.editCaracteristicas.setOnClickListener {
+            showCaracteristicasDialog()
         }
     }
 
@@ -130,75 +134,98 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1000 && resultCode == AppCompatActivity.RESULT_OK) {
-            selectedImageUri = data?.data
-            binding.imgCuarto.setImageURI(selectedImageUri)
-        }
-    }
-
-    private fun uploadDataToFirebase(precio: String, compartida: String, bano: String, mascotas: String) {
-        if (selectedImageUri != null) {
-            val filename = UUID.randomUUID().toString()
-            val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
-            storageReference.putFile(selectedImageUri!!)
-                .addOnSuccessListener {
-                    storageReference.downloadUrl.addOnSuccessListener { uri ->
-                        saveDataToFirebase(precio, compartida, bano, mascotas, uri.toString())
-                    }
+            val imageUri = data?.data
+            if (imageUri != null) {
+                selectedImageUris.add(imageUri)
+                when (selectedImageUris.size) {
+                    1 -> binding.imgCuarto.setImageURI(imageUri)
+                    2 -> binding.imgCuarto2.setImageURI(imageUri)
+                    3 -> binding.imgCuarto3.setImageURI(imageUri)
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error al subir la imagen.", Toast.LENGTH_SHORT).show()
-                }
-        }
-    }
-
-    private fun saveDataToFirebase(precio: String, compartida: String, bano: String, mascotas: String, imageUrl: String) {
-        val database = FirebaseDatabase.getInstance().getReference("cuartos")
-        val cuartoId = database.push().key
-        val cuarto = Cuarto(precio, compartida, bano, mascotas, imageUrl, selectedLocation)
-
-        if (cuartoId != null) {
-            database.child(cuartoId).setValue(cuarto).addOnCompleteListener {
-                Toast.makeText(this, "Cuarto publicado con éxito.", Toast.LENGTH_SHORT).show()
-                finish()
             }
         }
     }
 
-    private fun obtenerUbicacionActual() {
-        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-            checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
-                    if (location != null) {
-                        val currentLatLng = LatLng(location.latitude, location.longitude)
-                        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-                    } else {
-                        Toast.makeText(this, "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show()
+    private fun uploadDataToFirebase(nombreAlojamiento: String, precio: String, descripcion: String, caracteristicas: String) {
+        val cuartoId = UUID.randomUUID().toString()
+        val imagesUrls = mutableListOf<String>()
+        var uploadCount = 0
+
+        for (uri in selectedImageUris) {
+            val filename = "$cuartoId/${UUID.randomUUID()}"
+            val imageRef = storageReference.child(filename)
+            imageRef.putFile(uri)
+                .addOnSuccessListener {
+                    imageRef.downloadUrl.addOnSuccessListener { url ->
+                        imagesUrls.add(url.toString())
+                        uploadCount++
+                        if (uploadCount == selectedImageUris.size) {
+                            saveDataToFirebase(nombreAlojamiento, precio, descripcion, caracteristicas, imagesUrls)
+                        }
                     }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error al subir imagen.", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
-    private fun buscarUbicacion(ubicacion: String) {
-        val geocoder = Geocoder(this)
-        val addressList = geocoder.getFromLocationName(ubicacion, 1)
-        if (addressList != null && addressList.isNotEmpty()) {
-            val address = addressList[0]
-            val latLng = LatLng(address.latitude, address.longitude)
-            mMap?.clear()
-            mMap?.addMarker(MarkerOptions().position(latLng).title(ubicacion))
-            mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-        } else {
-            Toast.makeText(this, "No se pudo encontrar la ubicación.", Toast.LENGTH_SHORT).show()
+    private fun saveDataToFirebase(nombreAlojamiento: String, precio: String, descripcion: String, caracteristicas: String, imagesUrls: List<String>) {
+        val database = FirebaseDatabase.getInstance().getReference("cuartos")
+        val cuarto = Cuarto(nombreAlojamiento, precio, descripcion, caracteristicas, imagesUrls, selectedLocation)
+
+        database.child(cuarto.id).setValue(cuarto)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Cuarto publicado con éxito.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error al publicar cuarto.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun showCaracteristicasDialog() {
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_caracteristicas, null)
+        builder.setView(dialogView)
+        builder.setTitle("Seleccione las características")
+        builder.setPositiveButton("Aceptar") { dialog, _ ->
+            val chipGroup = dialogView.findViewById<ChipGroup>(R.id.chipGroupCaracteristicas)
+            val selectedCaracteristicas = mutableListOf<String>()
+            for (i in 0 until chipGroup.childCount) {
+                val chip = chipGroup.getChildAt(i) as Chip
+                if (chip.isChecked) {
+                    selectedCaracteristicas.add(chip.text.toString())
+                }
+            }
+            binding.editCaracteristicas.setText(selectedCaracteristicas.joinToString(", "))
+            dialog.dismiss()
         }
+        builder.setNegativeButton("Cancelar") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    private fun showMapDialog() {
+        val mapDialogFragment = MapDialogFragment()
+        mapDialogFragment.setOnLocationSelectedListener(object : MapDialogFragment.OnLocationSelectedListener {
+            override fun onLocationSelected(location: LatLng) {
+                selectedLocation = location
+                binding.editUbicacion.setText("Ubicación seleccionada: ${location.latitude}, ${location.longitude}")
+            }
+        })
+        mapDialogFragment.show(supportFragmentManager, "mapDialog")
     }
 
     data class Cuarto(
+        val nombreAlojamiento: String,
         val precio: String,
-        val compartida: String,
-        val bano: String,
-        val mascotas: String,
-        val imageUrl: String,
+        val descripcion: String,
+        val caracteristicas: String,
+        val imagesUrls: List<String>,
         val location: LatLng?
-    )
+    ) {
+        val id: String = UUID.randomUUID().toString()
+    }
 }

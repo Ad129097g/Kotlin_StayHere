@@ -1,173 +1,247 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CuartoOfrecido">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <!-- CardView 1: Publicar Habitación -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="30dp"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/txt_cofrecidos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Item_COfrecidos"
-                android:textStyle="bold"
-                android:textSize="20sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp">
-
-                <AutoCompleteTextView
-                    android:id="@+id/edit_ubicacion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Escriba la ubicación"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btnBuscarUbicacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Buscar"
-                android:layout_marginTop="10dp"/>
-
-            <Button
-                android:id="@+id/btnBuscarUbicacionActual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Obtener Ubicación Actual"
-                android:layout_marginTop="10dp"/>
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/map"
-                class="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp" />
-
-            <Button
-                android:id="@+id/btnSeleccionarUbicacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Seleccionar Ubicación"
-                android:layout_marginTop="10dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp">
-
-                <EditText
-                    android:id="@+id/edit_precio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/edit_precio"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp">
-
-                <EditText
-                    android:id="@+id/edit_compartida"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/edit_compartida"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp">
-
-                <EditText
-                    android:id="@+id/edit_bano"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/edit_baño"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp">
-
-                <EditText
-                    android:id="@+id/edit_mascotas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/edit_mascotas"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            android:padding="20dp"
+            app:cardElevation="5dp"
+            android:layout_marginTop="10dp">
 
             <RelativeLayout
-                android:id="@+id/cuartoRL"
-                android:layout_marginTop="15dp"
-                android:layout_centerHorizontal="true"
-                android:layout_width="120dp"
-                android:layout_height="120dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/img_cuarto"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:src="@drawable/img" />
+                <TextView
+                    android:id="@+id/publicar_habitacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Publicar Habitacion"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:padding="15dp"/>
 
+                <!-- Línea divisoria -->
+                <View
+                    android:layout_below="@id/publicar_habitacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <EditText
+                    android:id="@+id/editNombreAlojamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre del Alojamiento"
+                    android:layout_marginTop="10dp"
+                    android:padding="20dp"/>
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- CardView 2: Ubica tu alojamiento -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            android:layout_marginTop="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/ubica_alojamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ubica tu alojamiento"
+                    android:textSize="15sp"
+                    android:padding="15dp"/>
+
+                <EditText
+                    android:id="@+id/editUbicacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese una ubicación"
+                    android:layout_below="@id/ubica_alojamiento"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:id="@+id/btnBuscarUbicacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar Ubicación"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/editUbicacion"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- CardView 3: Agrega imágenes del alojamiento -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            android:layout_marginTop="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/agrega_imagenes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Agrega imágenes del alojamiento"
+                    android:textSize="15sp"
+                    android:padding="15dp"/>
+
+                <!-- Línea divisoria -->
+                <View
+                    android:id="@+id/view"
+                    android:layout_below="@id/agrega_imagenes"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- HorizontalScrollView para imágenes -->
+                <HorizontalScrollView
+                    android:id="@+id/sc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Imágenes del cuarto -->
+                        <ImageView
+                            android:id="@+id/imgCuarto"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="10dp"
+                            android:scaleType="centerCrop"
+                            android:contentDescription="Imagen del cuarto"
+                            android:src="@drawable/img"/>
+
+                        <ImageView
+                            android:id="@+id/imgCuarto2"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="10dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img"/>
+
+                        <ImageView
+                            android:id="@+id/imgCuarto3"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="10dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img"/>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/FABCambiarImg"
-                    android:layout_alignParentEnd="true"
-                    app:fabSize="mini"
-                    android:src="@drawable/ic_seleccionar_imagen"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/icon_imagen"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"
+                    android:layout_below="@+id/sc"/>
             </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_publicar"
-                android:text="@string/btn_publicar"
-                android:textAllCaps="true"
-                android:layout_marginTop="15dp"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content" />
+        <!-- CardView 4: Características del alojamiento -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            android:layout_marginTop="10dp">
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
-</RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/caracteristicas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Características del alojamiento"
+                    android:textSize="15sp"
+                    android:padding="10dp"/>
+
+                <!-- Línea divisoria -->
+                <View
+                    android:id="@+id/view2"
+                    android:layout_below="@id/caracteristicas"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <EditText
+                    android:id="@+id/editPrecio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Precio"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/view2"/>
+
+                <EditText
+                    android:id="@+id/editDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Descripción"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/editPrecio"/>
+
+                <EditText
+                    android:id="@+id/editCaracteristicas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Características"
+                    android:layout_below="@id/editDescripcion"
+                    android:focusable="false"
+                    android:layout_marginTop="10dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Botón para publicar -->
+        <Button
+            android:id="@+id/btnPublicar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Publicar"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</ScrollView>

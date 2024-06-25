@@ -4,21 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:layout_margin="20dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Seleccione las características"
+        android:text="Características de su habitacion"
         android:textSize="18sp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroupCaracteristicas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp" >
+        android:layout_marginTop="10dp">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipBanoPropio"
@@ -59,10 +61,4 @@
 
     </com.google.android.material.chip.ChipGroup>
 
-    <Button
-        android:id="@+id/btn_dialog_ok"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="OK"
-        android:layout_marginTop="20dp" />
 </LinearLayout>
