@@ -206,12 +206,6 @@
                 android:layout_toStartOf="@id/btn_editar"
                 android:layout_marginEnd="10dp" />
         </RelativeLayout>
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/btnPerfilArrendador"
-            android:text="Perfil Arrendador"
-            android:layout_below="@id/a"
-            android:layout_centerHorizontal="true"/>
+
     </LinearLayout>
 </ScrollView>

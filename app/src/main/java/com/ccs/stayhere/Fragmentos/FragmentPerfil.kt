@@ -1,5 +1,6 @@
 package com.ccs.stayhere.Fragmentos
 
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -59,10 +60,6 @@ class FragmentPerfil : Fragment() {
             activity?.finishAffinity()
         }
 
-        // Nuevo botón para ir a la página del perfil del arrendador
-        binding.btnPerfilArrendador.setOnClickListener {
-            startActivity(Intent(mContext, FragmentPerfilArrendador::class.java))
-        }
     }
 
     private fun leerInfo() {

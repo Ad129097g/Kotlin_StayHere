@@ -139,92 +139,19 @@
                         android:textAllCaps="true"
                         android:backgroundTint="@color/stay" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_below="@+id/RL_CO"
+
+                <!-- RecyclerView for Cuartos -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cuartolist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
-
-                    <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="130dp"
-                        android:src="@drawable/forapp"
-                        android:layout_marginEnd="16dp" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Precio"
-                            android:textAppearance="?attr/textAppearanceBody2" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Compartida"
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            android:layout_marginTop="4dp" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="4dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Calificación: "
-                                android:textAppearance="?attr/textAppearanceBody2" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ic_star" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ic_star" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ic_star" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ic_star" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ic_star" />
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Baño"
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            android:layout_marginTop="4dp" />
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ver más"
-                            android:backgroundTint="@color/stay"
-                            android:layout_gravity="end"
-                            android:layout_marginTop="1dp" />
-                    </LinearLayout>
-                </LinearLayout>
-
+                    android:layout_below="@+id/RL_CO"
+                    android:layout_marginTop="8dp"
+                    tools:listitem="@layout/cuarto_item"
+                    android:padding="8dp"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
