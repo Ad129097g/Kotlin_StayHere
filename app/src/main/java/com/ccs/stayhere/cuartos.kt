@@ -8,7 +8,8 @@ data class cuartos(
     var descripcion: String? = null,
     var caracteristicas: String? = null,
     var imagesUrls: List<String>? = null,
-    var location: LatLngDto? = null // Usamos el DTO en lugar de LatLng
+    var location: LatLngDto? = null, // Usamos el DTO en lugar de LatLng
+    var idUsuario: String? = null
 ) {
     val id: String = UUID.randomUUID().toString()
 }

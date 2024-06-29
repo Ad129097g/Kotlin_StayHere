@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -149,7 +150,7 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
     private fun uploadDataToFirebase(nombreAlojamiento: String, precio: String, descripcion: String, caracteristicas: String) {
         val cuartoId = UUID.randomUUID().toString()
         val imagesUrls = mutableListOf<String>()
-        var uploadCount = 0
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
 
         for (uri in selectedImageUris) {
             val filename = "$cuartoId/${UUID.randomUUID()}"
@@ -158,9 +159,8 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
                 .addOnSuccessListener {
                     imageRef.downloadUrl.addOnSuccessListener { url ->
                         imagesUrls.add(url.toString())
-                        uploadCount++
-                        if (uploadCount == selectedImageUris.size) {
-                            saveDataToFirebase(nombreAlojamiento, precio, descripcion, caracteristicas, imagesUrls)
+                        if (imagesUrls.size == selectedImageUris.size) {
+                            saveDataToFirebase(nombreAlojamiento, precio, descripcion, caracteristicas, imagesUrls, currentUserUid)
                         }
                     }
                 }
@@ -170,9 +170,11 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun saveDataToFirebase(nombreAlojamiento: String, precio: String, descripcion: String, caracteristicas: String, imagesUrls: List<String>) {
+
+
+    private fun saveDataToFirebase(nombreAlojamiento: String, precio: String, descripcion: String, caracteristicas: String, imagesUrls: List<String>, idUsuario: String?) {
         val database = FirebaseDatabase.getInstance().getReference("cuartos")
-        val cuarto = Cuarto(nombreAlojamiento, precio, descripcion, caracteristicas, imagesUrls, selectedLocation)
+        val cuarto = Cuarto(nombreAlojamiento, precio, descripcion, caracteristicas, imagesUrls, selectedLocation, idUsuario)
 
         database.child(cuarto.id).setValue(cuarto)
             .addOnSuccessListener {
@@ -183,6 +185,8 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this, "Error al publicar cuarto.", Toast.LENGTH_SHORT).show()
             }
     }
+
+
 
     private fun showCaracteristicasDialog() {
         val builder = AlertDialog.Builder(this)
@@ -224,7 +228,8 @@ class CuartoOfrecido : AppCompatActivity(), OnMapReadyCallback {
         val descripcion: String,
         val caracteristicas: String,
         val imagesUrls: List<String>,
-        val location: LatLng?
+        val location: LatLng?,
+        val idUsuario: String?
     ) {
         val id: String = UUID.randomUUID().toString()
     }
