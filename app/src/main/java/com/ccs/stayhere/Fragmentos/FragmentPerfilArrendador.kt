@@ -2,6 +2,7 @@ package com.ccs.stayhere.Fragmentos
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -75,6 +76,8 @@ class FragmentPerfilArrendador : Fragment() {
             activity?.finishAffinity()
         }
 
+        setupContactButton()
+
         return view
     }
 
@@ -144,6 +147,34 @@ class FragmentPerfilArrendador : Fragment() {
                 }
 
                 binding.cuartolist.adapter = CuartoAdapter(cuartoArrayList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Manejar errores si es necesario
+            }
+        })
+    }
+    private fun setupContactButton() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userId = currentUser?.uid
+
+        val userRef = FirebaseDatabase.getInstance().getReference("Usuarios").child(userId ?: return)
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val mostrarBotonWhatsApp = snapshot.child("mostrarBotonWhatsApp").getValue(Boolean::class.java) ?: false
+                val numeroTelefono = snapshot.child("Telefono").getValue(String::class.java)
+
+                if (mostrarBotonWhatsApp && !numeroTelefono.isNullOrEmpty()) {
+                    binding.btnContactar.visibility = View.VISIBLE
+                    binding.btnContactar.setOnClickListener {
+                        val url = "https://api.whatsapp.com/send?phone=$numeroTelefono"
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(url)
+                        startActivity(intent)
+                    }
+                } else {
+                    binding.btnContactar.visibility = View.GONE
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

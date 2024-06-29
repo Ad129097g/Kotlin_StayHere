@@ -98,6 +98,7 @@
             <com.hbb20.CountryCodePicker
                 android:id="@+id/selectorCod"
                 android:gravity="center"
+                android:layout_marginTop="20dp"
                 app:ccp_autoDetectCountry="true"
                 app:ccp_rememberLastSelection="true"
                 android:layout_width="wrap_content"
@@ -125,18 +126,26 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </RelativeLayout>
-        
+        <CheckBox
+            android:id="@+id/checkBoxMostrarWhatsApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/RL_Cod_Tel"
+            android:layout_marginTop="15dp"
+            android:text="Mostrar botón de WhatsApp"/>
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_actualizar"
             android:layout_width="200dp"
-            android:textAllCaps="true"
-            app:icon="@drawable/baseline_edit_24"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkBoxMostrarWhatsApp"
             android:layout_centerInParent="true"
-            android:layout_below="@id/RL_Cod_Tel"
             android:layout_marginTop="15dp"
 
-            android:layout_height="wrap_content"
-            android:text="@string/btn_actualizar"/>
+            android:text="@string/btn_actualizar"
+            android:textAllCaps="true"
+            app:icon="@drawable/baseline_edit_24" />
 
         
     </RelativeLayout>

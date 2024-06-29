@@ -102,6 +102,22 @@
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_numero"
+                    android:orientation="horizontal">
+
+                    <!-- Otros elementos del layout -->
+
+                    <Button
+                        android:id="@+id/btn_contactar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contactar"
+                        android:visibility="gone" />
+
+                </LinearLayout>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 

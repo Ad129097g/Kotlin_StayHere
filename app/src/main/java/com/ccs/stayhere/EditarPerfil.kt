@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 class EditarPerfil : AppCompatActivity() {
 
@@ -45,6 +46,9 @@ class EditarPerfil : AppCompatActivity() {
         binding.FABCambiarImg.setOnClickListener {
             selec_imagen_de()
         }
+        binding.btnActualizar.setOnClickListener {
+            actualizarPerfil()
+        }
     }
 
     private fun cargarInfo() {
@@ -57,11 +61,13 @@ class EditarPerfil : AppCompatActivity() {
                     val fechaNac = snapshot.child("fecha_nac").value.toString()
                     val telefono = snapshot.child("Telefono").value.toString()
                     val codTelefono = snapshot.child("codigoTelefono").value.toString()
+                    val mostrarBotonWhatsApp = snapshot.child("mostrarBotonWhatsApp").value as? Boolean ?: false
 
                     //setear
                     binding.editNombres.setText(nombres)
                     binding.editFNac.setText(fechaNac)
                     binding.editTelefono.setText(telefono)
+                    binding.checkBoxMostrarWhatsApp.isChecked = mostrarBotonWhatsApp
 
                     // Cargar imagen con Glide
                     Glide.with(this@EditarPerfil)
@@ -212,5 +218,64 @@ class EditarPerfil : AppCompatActivity() {
                 ).show()
             }
         }
+    private fun actualizarPerfil() {
+        progressDialog.setMessage("Actualizando perfil...")
+        progressDialog.show()
+
+        val nombres = binding.editNombres.text.toString().trim()
+        val fechaNac = binding.editFNac.text.toString().trim()
+        val telefono = binding.editTelefono.text.toString().trim()
+        val codigoTelefono = binding.selectorCod.selectedCountryCodeWithPlus
+        val mostrarBotonWhatsApp = binding.checkBoxMostrarWhatsApp.isChecked
+
+        if (nombres.isEmpty() || fechaNac.isEmpty() || telefono.isEmpty()) {
+            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
+            progressDialog.dismiss()
+            return
+        }
+
+        val hashMap = hashMapOf<String, Any>(
+            "nombres" to nombres,
+            "fecha_nac" to fechaNac,
+            "Telefono" to telefono,
+            "codigoTelefono" to codigoTelefono,
+            "mostrarBotonWhatsApp" to mostrarBotonWhatsApp
+        )
+
+        if (imageUri != null) {
+            val filePathAndName = "Perfil_Imagenes/" + firebaseAuth.uid
+            val reference = FirebaseStorage.getInstance().reference.child(filePathAndName)
+            reference.putFile(imageUri!!)
+                .addOnSuccessListener { taskSnapshot ->
+                    val uriTask = taskSnapshot.storage.downloadUrl
+                    while (!uriTask.isSuccessful);
+                    val uploadedImageUrl = uriTask.result.toString()
+
+                    hashMap["urlImagenPerfil"] = uploadedImageUrl
+
+                    actualizarInfoEnBD(hashMap)
+                }
+                .addOnFailureListener { e ->
+                    progressDialog.dismiss()
+                    Toast.makeText(this, "Error al subir imagen: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            actualizarInfoEnBD(hashMap)
+        }
+    }
+    private fun actualizarInfoEnBD(hashMap: HashMap<String, Any>) {
+        val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
+        ref.child(firebaseAuth.uid ?: "")
+            .updateChildren(hashMap)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(this, "Error al actualizar perfil: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
 
 }
